@@ -1,0 +1,8 @@
+fig = openfig('vacumtoairt3.fig');
+axObjs = fig.Children;
+dataObjs = axObjs.Children;
+x = dataObjs(1).XData;
+y = dataObjs(1).YData;
+
+writematrix(x,'vacumtoairt3.csv');
+writematrix(y,'vacumtoairt2.csv','WriteMode','append');
