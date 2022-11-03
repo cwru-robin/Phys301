@@ -20,7 +20,7 @@ for i in arange:
     for a in range(10):
         device.reset_input_buffer()
         line=device.readline()
-        nice= line.strip((b'\n')).split(b',')
+        nice= line.strip((b'\n')).strip("b").strip("'").split(b',')
         print(a)
         nice.append(i)
         writer.writerow(nice)
