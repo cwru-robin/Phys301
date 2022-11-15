@@ -10,7 +10,7 @@ distance1=7.5
 
 ##mm
 arange=np.arange(distance0,distance1,0.1)
-f= open("data/trail7-5mm.csv","w")
+f= open("data/trail9-5.4mm.csv","w")
 writer=csv.writer(f)
 for i in arange:
     print("Move Slit to: ",str(i))
