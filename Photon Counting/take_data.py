@@ -2,13 +2,15 @@ import serial
 import numpy as np
 import csv
 
-device=serial.Serial("/dev/ttyUSB1",230400)
-distance0=3
-distance1=6
+device=serial.Serial("/dev/ttyUSB0",230400)
+distance0=1
+distance1=7.5
+
+
 
 ##mm
-arange=np.arange(distance0,distance1,0.2)
-f= open("data/trail1.csv","w")
+arange=np.arange(distance0,distance1,0.1)
+f= open("data/trail9-5.4mm.csv","w")
 writer=csv.writer(f)
 for i in arange:
     print("Move Slit to: ",str(i))
@@ -20,7 +22,7 @@ for i in arange:
     for a in range(10):
         device.reset_input_buffer()
         line=device.readline()
-        nice= line.strip((b'\n')).strip("b").strip("'").split(b',')
+        nice= line.strip((b'\n')).split(b',')
         print(a)
         nice.append(i)
         writer.writerow(nice)
