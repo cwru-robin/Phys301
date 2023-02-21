@@ -71,8 +71,8 @@ fprintf(TPS, 'VOLT 0.01');
  i = 100;
  HV=linspace(100,5000,i);
 Tempture = 0.01:0.03:1.3;
-fileheader="poco90_45N45";
-count=1;
+fileheader="voltAcrossLC_45N45";
+count=24;
 Voltage_O = zeros([1 length(Tempture)]);
  for j=1:length(Tempture)
         
@@ -108,7 +108,7 @@ Voltage_O = zeros([1 length(Tempture)]);
         pause(2);
         fprintf(KDMM, ':CONF:VOLT:DC'); %setting up the kdmm to read "  "
         x=query(KDMM, ':MEAS:VOLT?');
-        fprintf(x)
+         fprintf(x)
         fprintf(": Voltage at"+HV(i)+"\n")
         Voltage_R(i) =str2num(x(2:end));
        
@@ -120,10 +120,86 @@ Voltage_O = zeros([1 length(Tempture)]);
     saveas(gcf,filename)
     save(filename,'Voltage_R','HV')
     count=count+1; 
-   
+      
  end
  filename=fileheader+"_temp";
  set(0,"CurrentFigure",f1);
  saveas(gcf,filename)
  save(filename,'Voltage_O','Tempture')
+fprintf(TPS, 'VOLT 0.01');
 
+%%
+f1=figure(1);
+ f2= figure(2);
+ i = 100;
+ HV=linspace(100,5000,i);
+Tempture = 0.01:0.5:3.4;
+fileheader="temp22-92(-4)_120N45";
+count=24;
+Voltage_O = zeros([1 length(Tempture)]);
+
+        
+Voltage_R = zeros([1 length(HV)]);
+
+pause(2)
+        
+for i = 1:length(HV)
+
+    fprintf(SPS, ['VSET',num2str(HV(i))]);
+    pause(1.5);
+    fprintf(KDMM, ':CONF:VOLT:DC'); %setting up the kdmm to read "  "
+    x=query(KDMM, ':MEAS:VOLT?');
+     fprintf(x)
+    fprintf(": Voltage at"+HV(i)+"\n")
+    Voltage_R(i) =str2num(x(2:end));
+
+    set(0,"CurrentFigure",f2);
+    plot(HV,Voltage_R);
+end
+filename=num2str(count)+fileheader+num2str(Tempture(j)*100);
+set(0,"CurrentFigure",f2);
+saveas(gcf,filename)
+save(filename,'Voltage_R','HV')
+count=count+1; 
+
+
+ 
+fprintf(TPS, 'VOLT 0.01');
+
+%%
+ f1=figure(1);
+ f2= figure(2);
+ i = 100;
+ HV=linspace(100,5000,i);
+Tempture = 0.01:0.5:3.4;
+fileheader="voltAcrossLC30c_45N45";
+count=24;
+Voltage_O = zeros([1 length(Tempture)]);
+ for j=1:length(Tempture)
+        
+        Voltage_R = zeros([1 length(HV)]);
+        fprintf(TPS, ['VOLT ',num2str(Tempture(j))]);
+       pause(2)
+        
+     for i = 1:length(HV)
+        
+        fprintf(SPS, ['VSET',num2str(HV(i))]);
+        pause(1.5);
+        fprintf(KDMM, ':CONF:VOLT:DC'); %setting up the kdmm to read "  "
+        x=query(KDMM, ':MEAS:VOLT?');
+         fprintf(x)
+        fprintf(": Voltage at"+HV(i)+"\n")
+        Voltage_R(i) =str2num(x(2:end));
+       
+        set(0,"CurrentFigure",f2);
+        plot(HV,Voltage_R);
+      end
+    filename=num2str(count)+fileheader+num2str(Tempture(j)*100);
+    set(0,"CurrentFigure",f2);
+    saveas(gcf,filename)
+    save(filename,'Voltage_R','HV')
+    count=count+1; 
+      
+ end
+ 
+fprintf(TPS, 'VOLT 0.01');
